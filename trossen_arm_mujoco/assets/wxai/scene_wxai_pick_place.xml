@@ -1,5 +1,5 @@
 <mujoco model="wxai pick place scene">
-  <include file="wxai_follower.xml"/>
+  <include file="wxai_compliant.xml"/>
 
   <statistic center="0 0 0.1" extent="0.6"/>
 
@@ -27,4 +27,9 @@
       <site name="cube_site" pos="0 0 0" size="0.005" rgba="1 0 0 0"/>
     </body>
   </worldbody>
+
+    <keyframe>
+    <!-- 8 robot joints + cube [x y z] + cube quat [w x y z] -->
+    <key name="home" qpos="0 0 0 0 0 0 0 0 0.35 -0.15 0.025 1 0 0 0" ctrl="0 0 0 0 0 0 0"/>
+  </keyframe>
 </mujoco>

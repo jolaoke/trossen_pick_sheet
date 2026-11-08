@@ -115,7 +115,7 @@
     <position name="left_gripper" joint="left_carriage_joint" kp="1000" kv="50" ctrlrange="0 0.044" forcerange="-400 400"/>
   </actuator>
 
-  <keyframe>
+  <!-- <keyframe>
     <key name="home" qpos="0 0 0 0 0 0 0 0" ctrl="0 0 0 0 0 0 0"/>
-  </keyframe>
+  </keyframe> -->
 </mujoco>
