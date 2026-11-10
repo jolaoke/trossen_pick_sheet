@@ -30,6 +30,6 @@
 
     <keyframe>
     <!-- 8 robot joints + cube [x y z] + cube quat [w x y z] -->
-    <key name="home" qpos="0 0 0 0 0 0 0 0 0.35 -0.15 0.025 1 0 0 0" ctrl="0 0 0 0 0 0 0"/>
+    <key name="home" qpos="0 0 0 0 0 0 0 0 0 0.35 -0.15 0.025 1 0 0 0" ctrl="0 0 0 0 0 0 0"/>
   </keyframe>
 </mujoco>

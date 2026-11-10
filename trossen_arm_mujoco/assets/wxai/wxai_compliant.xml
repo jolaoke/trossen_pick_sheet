@@ -28,9 +28,23 @@
     <mesh name="d405" file="d405.stl" scale="0.001 0.001 0.001"/>
     <mesh name="gripper_left" file="gripper_left.stl"/>
     <mesh name="gripper_right" file="gripper_right.stl"/>
-    <!-- Define meshes for proximal and distal finger links -->
-    <mesh name="finger_proximal_right" file="right_finger_proximal_worldframe.stl" scale="0.001 0.001 0.001"/>
-    <mesh name="finger_distal_right" file="right_finger_distal.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="finger_proximal_right" file="finger_proximal_right.stl"/>
+    <mesh name="finger_distal_right" file="finger_distal_right.stl"/>
+
+    <!-- Finger collision meshes -->
+    <mesh name="finger_proximal_right_collision_0" file="collision_mesh_finger_proximal_right/collision_hull_0.stl"/>
+    <mesh name="finger_proximal_right_collision_1" file="collision_mesh_finger_proximal_right/collision_hull_1.stl"/>
+    <mesh name="finger_proximal_right_collision_2" file="collision_mesh_finger_proximal_right/collision_hull_2.stl"/>
+    <mesh name="finger_proximal_right_collision_3" file="collision_mesh_finger_proximal_right/collision_hull_3.stl"/>
+    <mesh name="finger_proximal_right_collision_4" file="collision_mesh_finger_proximal_right/collision_hull_4.stl"/>
+    <mesh name="finger_proximal_right_collision_5" file="collision_mesh_finger_proximal_right/collision_hull_5.stl"/>
+    <mesh name="finger_proximal_right_collision_6" file="collision_mesh_finger_proximal_right/collision_hull_6.stl"/>
+    <mesh name="finger_proximal_right_collision_7" file="collision_mesh_finger_proximal_right/collision_hull_7.stl"/>
+
+    <mesh name="finger_distal_right_collision_0" file="collision_mesh_finger_distal_right/collision_hull_0.stl"/>
+    <mesh name="finger_distal_right_collision_1" file="collision_mesh_finger_distal_right/collision_hull_1.stl"/>
+    <mesh name="finger_distal_right_collision_2" file="collision_mesh_finger_distal_right/collision_hull_2.stl"/>
+    <mesh name="finger_distal_right_collision_3" file="collision_mesh_finger_distal_right/collision_hull_3.stl"/>
   </asset>
 
   <worldbody>
@@ -79,13 +93,34 @@
                   <camera name="cam" pos="0.05864 0.009 0.05427" quat="0.5793 0.4056 -0.4056 -0.5793" mode="fixed" fovy="87"/>
 
                   <body name="carriage_right" pos="0.0865 -0.023 0" gravcomp="1">
+                    <!-- TODO: subtract the original finger's mass from this. Don't know how to readjust for diaginertia, so may just leave that. -->
                     <inertial pos="0.00169015 0.00592793 0.00201817" quat="-0.370973 0.740886 -0.0847721 0.553427" mass="0.081271" diaginertia="4.29565e-05 3.87081e-05 2.21528e-05"/>
                     <joint name="right_carriage_joint" pos="0 0 0" axis="0 -1 0" type="slide" range="0 0.044" armature="0.1" frictionloss="0.1" actuatorgravcomp="true"/>
                     <geom class="visual" mesh="carriage_right"/>
-                    <geom class="visual" mesh="finger_proximal_right"/>
-                    <geom class="collision" type="box" size="0.0275 0.005 0.01" pos="0.0286 0.01436 0.0037" quat="0.99257 -0.00451 0.10246 0.06547"/>
-                    <geom class="collision" type="box" size="0.0275 0.005 0.01" pos="0.0285 0.01429 -0.00973" quat="0.98344 0.0133 -0.16893 0.06427"/>
-                    <geom class="collision" type="box" size="0.00732 0.00214 0.00767" pos="0.0622 0.02083 -0.00105" quat="1 0 0 0"/>
+
+                    <body name="finger_proximal_right" gravcomp="0">
+                        <inertial pos="0.01668954 0.00926863 -0.00242814" mass="0.02705003" fullinertia="0.00000698 0.00001080 0.00000726 0.00000197 -0.00000032 -0.00000017"/>
+                        <geom class="visual" mesh="finger_proximal_right"/>
+                        <geom class="collision" type="mesh" mesh="finger_proximal_right_collision_0"/>
+                        <geom class="collision" type="mesh" mesh="finger_proximal_right_collision_1"/>
+                        <geom class="collision" type="mesh" mesh="finger_proximal_right_collision_2"/>
+                        <geom class="collision" type="mesh" mesh="finger_proximal_right_collision_3"/>
+                        <geom class="collision" type="mesh" mesh="finger_proximal_right_collision_4"/>
+                        <geom class="collision" type="mesh" mesh="finger_proximal_right_collision_5"/>
+                        <geom class="collision" type="mesh" mesh="finger_proximal_right_collision_6"/>
+                        <geom class="collision" type="mesh" mesh="finger_proximal_right_collision_7"/>
+
+                        <body name="finger_distal_right" gravcomp="0" pos="0.0518 0.0191 -0.0027">
+                            <joint name="right_finger_joint" pos="0 0 0" axis="0 0 1" type="hinge" range="0 1.39626" stiffness="0.0036" damping="0.1"/>
+                            <inertial pos="0.00679067 0.00157981 0.00080377" quat="0.675584 -0.585630 -0.395749 -0.209771" mass="0.00119566" diaginertia="0.00000002 0.00000003 0.00000005" />
+                            <geom class="visual" mesh="finger_distal_right"/>
+                            <geom class="collision" type="mesh" mesh="finger_distal_right_collision_0"/>
+                            <geom class="collision" type="mesh" mesh="finger_distal_right_collision_1"/>
+                            <geom class="collision" type="mesh" mesh="finger_distal_right_collision_2"/>
+                            <geom class="collision" type="mesh" mesh="finger_distal_right_collision_3"/>
+                        </body>
+                    </body>
+
                   </body>
 
                   <body name="carriage_left" pos="0.0865 0.023 0" gravcomp="1">
