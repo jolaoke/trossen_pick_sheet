@@ -93,8 +93,8 @@
                   <camera name="cam" pos="0.05864 0.009 0.05427" quat="0.5793 0.4056 -0.4056 -0.5793" mode="fixed" fovy="87"/>
 
                   <body name="carriage_right" pos="0.0865 -0.023 0" gravcomp="1">
-                    <!-- TODO: subtract the original finger's mass from this. Don't know how to readjust for diaginertia, so may just leave that. -->
-                    <inertial pos="0.00169015 0.00592793 0.00201817" quat="-0.370973 0.740886 -0.0847721 0.553427" mass="0.081271" diaginertia="4.29565e-05 3.87081e-05 2.21528e-05"/>
+                    <!-- Subtracted mass of finger from carriage right (OG mass=0.081271), but left the other inertial data alone -->
+                    <inertial pos="0.00169015 0.00592793 0.00201817" quat="-0.370973 0.740886 -0.0847721 0.553427" mass="0.052271" diaginertia="4.29565e-05 3.87081e-05 2.21528e-05"/>
                     <joint name="right_carriage_joint" pos="0 0 0" axis="0 -1 0" type="slide" range="0 0.044" armature="0.1" frictionloss="0.1" actuatorgravcomp="true"/>
                     <geom class="visual" mesh="carriage_right"/>
 
@@ -111,7 +111,7 @@
                         <geom class="collision" type="mesh" mesh="finger_proximal_right_collision_7"/>
 
                         <body name="finger_distal_right" gravcomp="0" pos="0.0518 0.0191 -0.0027">
-                            <joint name="right_finger_joint" pos="0 0 0" axis="0 0 1" type="hinge" range="0 1.39626" stiffness="0.0036" damping="0.1"/>
+                            <joint name="right_finger_joint" pos="0 0 0" axis="0 0 1" type="hinge" range="0 1.39626" stiffness="0.0036" damping="0.01"/>
                             <inertial pos="0.00679067 0.00157981 0.00080377" quat="0.675584 -0.585630 -0.395749 -0.209771" mass="0.00119566" diaginertia="0.00000002 0.00000003 0.00000005" />
                             <geom class="visual" mesh="finger_distal_right"/>
                             <geom class="collision" type="mesh" mesh="finger_distal_right_collision_0"/>
