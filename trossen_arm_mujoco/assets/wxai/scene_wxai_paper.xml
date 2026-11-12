@@ -2,7 +2,7 @@
   <include file="wxai_compliant.xml"/>
   <include file="../paper.xml"/>
 
-  <statistic center="0.2 0 0.2" extent="0.7"/>
+  <statistic center="0.3 0 0.1" extent="0.9"/>
 
   <visual>
     <headlight diffuse="0.6 0.6 0.6" ambient="0.3 0.3 0.3" specular="0 0 0"/>
@@ -38,6 +38,22 @@
 
   <worldbody>
     <light pos="0 0 1.5" dir="0 0 -1" directional="true"/>
-    <geom name="floor" size="0 0 0.05" type="plane" material="groundplane"/>
+
+    <!-- Table: its top surface is at z = 0, where the arm base and the paper already sit,
+         so the arm and paper files don't need to change. The floor is moved down to
+         z = -0.75 (a normal table height below the tabletop).
+         Table spans x -0.06..0.74 and y -0.4..0.4: the arm (x=0, y=0) sits at the middle of the
+         back edge, facing across the table; the paper (x~0.2..0.4) is in front of it. -->
+    <body name="table" pos="0.34 0 0">
+      <!-- tabletop: 3 cm thick slab, top surface at z = 0 -->
+      <geom name="table_top" type="box" size="0.4 0.4 0.015" pos="0 0 -0.015" rgba="0.76 0.6 0.42 1"/>
+      <!-- four legs, 5 x 5 cm, from under the slab down to the floor (z = -0.75) -->
+      <geom name="table_leg_1" type="box" size="0.025 0.025 0.36" pos=" 0.36  0.36 -0.39" rgba="0.55 0.4 0.26 1"/>
+      <geom name="table_leg_2" type="box" size="0.025 0.025 0.36" pos=" 0.36 -0.36 -0.39" rgba="0.55 0.4 0.26 1"/>
+      <geom name="table_leg_3" type="box" size="0.025 0.025 0.36" pos="-0.36  0.36 -0.39" rgba="0.55 0.4 0.26 1"/>
+      <geom name="table_leg_4" type="box" size="0.025 0.025 0.36" pos="-0.36 -0.36 -0.39" rgba="0.55 0.4 0.26 1"/>
+    </body>
+
+    <geom name="floor" pos="0 0 -0.75" size="0 0 0.05" type="plane" material="groundplane"/>
   </worldbody>
 </mujoco>
