@@ -1,14 +1,10 @@
 from pathlib import Path
-import sys
 from time import perf_counter
 
 import mujoco
 
 
-# Pass a scene path to benchmark it, e.g.
-#   uv run python trossen_arm_mujoco/scripts/benchmark_collision.py trossen_arm_mujoco/assets/wxai/scene_wxai_paper.xml
-# With no argument it benchmarks the pick-and-place scene, as before.
-XML = Path(sys.argv[1]) if len(sys.argv) > 1 else Path("trossen_arm_mujoco/assets/wxai/scene_wxai_pick_place.xml")
+XML = Path("trossen_arm_mujoco/assets/wxai/scene_wxai_pick_place.xml")
 WARMUP_STEPS = 1_000
 MEASURE_STEPS = 10_000
 
