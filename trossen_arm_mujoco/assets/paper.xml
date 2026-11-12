@@ -1,5 +1,6 @@
-<mujoco model="Paper napkin ring">
-  <!-- <compiler autolimits="true"/>
+<mujoco model="Paper sheet">
+  <!-- Adapted from MuJoCo's paper napkin ring example (see git history for the original values).
+  <compiler autolimits="true"/>
   <option timestep="0.004" solver="Newton" integrator="discrete"/>
   <size memory="20M"/>
 
@@ -18,11 +19,21 @@
   </asset>
 
   <worldbody>
-    <flexcomp name="paper_napkin" type="grid" dim="2" count="17 17 1" spacing="0.0125 0.0125 0.0125"
-              pos="0 0 0" radius="0.001" mass="0.16" material="paper_mat">
-      <contact condim="1" solref="0.003 1"/>
+    <!-- A4 printer paper: 15 x 21 points -> 0.21 m x 0.297 m, 5 g (80 gsm).
+         Placed ~30 cm in front of the arm base (the arm sits at the origin), lying flat on the floor.
+         pos z = radius + 1 mm so it starts just above the ground instead of intersecting it. -->
+    <flexcomp name="paper_napkin" type="grid" dim="2" count="15 21 1" spacing="0.015 0.01485 0.015"
+              pos="0.30 0 0.002" radius="0.001" mass="0.005" material="paper_mat">
+      <!-- condim 3 = contact with friction (condim 1 was frictionless, so the gripper couldn't hold it).
+           Friction 0.4 is typical for paper. solref 0.004 = 2x the scene timestep (0.002), MuJoCo's minimum. -->
+      <contact condim="3" friction="0.4 0.005 0.0001" solref="0.004 1"/>
       <edge equality="true" solref="0.006 1" solimp="0.99 0.999 0.001"/>
-      <elasticity young="1.2e7" poisson="0.25" thickness="0.0034" damping="0.010"/>
+      <!-- Effective parameters chosen to match real paper's BENDING stiffness
+           (E*t^3 ~ 4e-3, same as 4 GPa x 0.1 mm printer paper) while keeping the in-plane
+           stiffness low enough to stay stable at a 2 ms timestep. Stretching is prevented
+           by the edge equality constraints above, so the low in-plane stiffness doesn't matter.
+           Real values (young=4e9, thickness=1e-4) would need a ~100x smaller timestep. -->
+      <elasticity young="5e5" poisson="0.3" thickness="0.002" damping="0.010"/>
     </flexcomp>
   </worldbody>
 
