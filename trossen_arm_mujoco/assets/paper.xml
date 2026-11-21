@@ -19,11 +19,14 @@
   </asset>
 
   <worldbody>
-    <!-- A4 printer paper: 15 x 21 points -> 0.21 m x 0.297 m, 5 g (80 gsm).
-         Placed ~30 cm in front of the arm base (the arm sits at the origin), lying flat on the floor.
-         pos z = radius + 1 mm so it starts just above the ground instead of intersecting it. -->
-    <flexcomp name="paper_napkin" type="grid" dim="2" count="15 21 1" spacing="0.015 0.01485 0.015"
-              pos="0.30 0 0.002" radius="0.001" mass="0.005" material="paper_mat">
+    <!-- 10 cm x 10 cm square of 80 gsm printer paper: 8 x 8 points, spacing 0.1/7 = 0.01429 m
+         (close to the ~1.5 cm grid used for the A4 sheet) -> 0.1 m x 0.1 m.
+         Mass scaled with area at 80 gsm: 0.01 m^2 x 0.08 kg/m^2 = 0.8 g.
+         (Previously A4: count="15 21 1" spacing="0.015 0.01485 0.015" mass="0.005".)
+         Placed ~30 cm in front of the arm base (the arm sits at the origin), lying flat on the table.
+         pos z = radius + 1 mm so it starts just above the surface instead of intersecting it. -->
+    <flexcomp name="paper_napkin" type="grid" dim="2" count="8 8 1" spacing="0.0142857 0.0142857 0.015"
+              pos="0.30 0 0.002" radius="0.001" mass="0.0008" material="paper_mat">
       <!-- condim 3 = contact with friction (condim 1 was frictionless, so the gripper couldn't hold it).
            Friction 0.4 is typical for paper. solref 0.004 = 2x the scene timestep (0.002), MuJoCo's minimum. -->
       <contact condim="3" friction="0.4 0.005 0.0001" solref="0.004 1"/>
