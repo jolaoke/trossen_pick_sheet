@@ -2,6 +2,15 @@
   <include file="wxai_compliant.xml"/>
   <include file="../paper.xml"/>
 
+  <!-- CG solver at tolerance 1e-6 so the arm runs in real time (~1.6x real time vs ~0.6x with the
+       default Newton solver, whose dense Hessian over the paper's 192 dofs dominates the step).
+       Paper behavior matches Newton (same droop/footprint when hanging off the table edge);
+       looser tolerances (1e-5) visibly change it. Keep the 2 ms timestep: the paper goes unstable at 4 ms.
+       iterations="400": CG needs up to ~140 iterations when the gripper presses the paper into the table;
+       with the default cap of 100 it stopped unconverged and the paper blew up (2/12 random slider tests;
+       0/40 with 400). Typical steps still converge in ~65 iterations, so this costs no speed. -->
+  <option solver="CG" tolerance="1e-6" iterations="400"/>
+
   <statistic center="0.3 0 0.1" extent="0.9"/>
 
   <visual>
