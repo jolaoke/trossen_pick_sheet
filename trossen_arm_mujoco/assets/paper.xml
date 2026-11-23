@@ -28,8 +28,13 @@
     <flexcomp name="paper_napkin" type="grid" dim="2" count="8 8 1" spacing="0.0142857 0.0142857 0.015"
               pos="0.30 0 0.002" radius="0.001" mass="0.0008" material="paper_mat">
       <!-- condim 3 = contact with friction (condim 1 was frictionless, so the gripper couldn't hold it).
-           Friction 0.4 is typical for paper. solref 0.004 = 2x the scene timestep (0.002), MuJoCo's minimum. -->
-      <contact condim="3" friction="0.4 0.005 0.0001" solref="0.004 1"/>
+           Friction 0.4 is typical for paper. solref 0.004 = 2x the scene timestep (0.002), MuJoCo's minimum.
+           priority="1": without it MuJoCo mixes contact parameters with the other geom, so every paper
+           contact got friction max(0.4, 1.0) = 1.0 and solref averaged with the geoms' default 0.02.
+           Because each paper vertex weighs only 12.5 mg, that soft contact pushed back with millinewtons:
+           a finger pressing on the sheet went straight through it to the table, and pinched paper slid
+           out of the gripper. With priority the paper's own friction/solref apply to all its contacts. -->
+      <contact condim="3" friction="0.4 0.005 0.0001" solref="0.004 1" priority="1"/>
       <edge equality="true" solref="0.006 1" solimp="0.99 0.999 0.001"/>
       <!-- Effective parameters chosen to match real paper's BENDING stiffness
            (E*t^3 ~ 4e-3, same as 4 GPa x 0.1 mm printer paper) while keeping the in-plane
